@@ -82,6 +82,37 @@ public class BlogDbSession : DbSession
 }
 ```
 
+## Fluent map
+You can use fluent api to create map for entities:
+
+```cs
+public class BlogDbSession : DbSession
+{
+    public DbTable<User> Users { get; set; }
+    public DbTable<Tag> Tags { get; set; }
+    public DbTable<BlogPost> BlogPosts { get; set; }
+
+    protected override void OnSetup(DbSessionConfiguration config)
+    {
+        config.UseProvider<STORM.Providers.SqlServer.SqlServerDbProvider>("Data Source=.;Initial Catalog=BlogDb;Integrated Security=true;MultipleActiveResultSets=True");
+        config.Entity<User>()
+            .Property(p => p.Username).HasMaxLength(100).IsUnique();
+        config.Entity<User>()
+            .Many(u => u.BlogPosts)
+            .ToRequiredOne()
+            .HasForeignKey(p => p.UserId);
+
+        config.Entity<BlogPost>()
+            .Many(p => p.Tags)
+            .ToMany(t => t.BlogPosts)
+            .LeftKeys("BlogPostId")
+            .RightKeys("TagId")
+            .ToTable("BlogPostsTags");
+        base.OnSetup(config);
+    }
+}
+```
+
 ## Create database from model
 
 ```cs
@@ -153,7 +184,7 @@ using var session = new BlogDbSession();
 var users = session.Users.Where(u=>u.Username == "tosinso").ToList();
 ```
 
-Query entities based on navigations:
+### Query entities based on navigations:
 
 ```cs
 using var session = new BlogDbSession();
@@ -199,4 +230,134 @@ WHERE
             ([Users.BlogPosts.BlogPostsTags.Tags].[Title] LIKE '%'+@param1+'%')
          )
      )
+```
+
+### Projecting output
+The simplest way to projecting output result is using select method:
+
+```cs
+var result = session.Users.Select(u => new
+{
+    u.Id,
+    Username = u.Username.ToLower(),
+    BlogPosts = u.BlogPosts.Select(p => new
+    {
+        p.Id,
+        p.Title,
+        p.Text,
+        Tags = p.Tags
+    }).ToList()
+});
+```
+
+The following queries run for getting result, 1 query for users, 1 query for blogposts and Tags is lazy loaded:
+
+```sql
+-- Main query
+SELECT
+    LOWER([Users].[Id]) [Id],
+    [Users].[Username] [Username],
+    [Users].[Id] [BlogPosts@key1]
+FROM
+    Users [Users]
+
+-- BlogPosts query
+(SELECT
+    [Users.BlogPosts].[Id] [Id],
+    [Users.BlogPosts].[Title] [Title],
+    [Users.BlogPosts].[Text] [Text],
+    [Users.BlogPosts].[Id] [Tags@key1]
+FROM
+    [dbo].[BlogPosts] [Users.BlogPosts]
+WHERE
+    [Users.BlogPosts].[UserId] in (@key1_where)
+)
+```
+
+## STORM Features:
+STORM Support many features that you can use:
+```
+POCO Entity map to database tables
+One to Many Navigations
+Many to One Navigations
+Many to Many Navigations
+Fluent and Attribute mapping
+Auto map
+Group property mapping
+Support composite keys
+Identity columns
+Computed columns
+Ignore properties
+Check constraints
+Default values (Use for default values and default in insert operations)
+Row version and Concurrency check
+Shadow Properties
+Indexes
+Sequences
+JSON columns	
+Change tracker
+Batch operation on SaveChanges
+Batch update and deletes on tables and many relations	
+Interceptors
+Create database from model
+Support auto lazy loading for One to Many, Many to One and Many to Many navigations
+ILazyLoad interface for custom lazy loading
+Create object proxies	
+Entity validators
+Update from Models
+Support async programming
+Execute and Execute batch commands
+Query features:
+	Simple queries
+	Complex queries
+	Advance Projection			
+		Project manies (loaded and lazy load)
+	Support NoTrack and NoProxies for queries
+	Second Level Cache
+	ProjecTo => Create projection automatically by model
+	ForXML and ForJSON (Only SQL Server)
+	Load function
+	Joins
+		Left, Inner, Left, Right
+	Intersect and Union
+	Support Case,When
+	Support advance grouping
+	Predicate Functions (Between, PadIndex, Like, In)
+	Other functions:
+		RowNumberOver
+		PartitionedRowNumberOver
+		RankOver
+		PartitionedRankOver
+		NTile
+		PartitionedNTile
+		DenseRank
+		PartitionedDenseRank
+		Choose
+		IIF
+		STUFF,
+		PatIndex
+```
+
+## Roadmap and features to implement:
+The following features are planned to implement:
+
+```
+Column value map
+Nullable Reference Types
+Inheritance entity map:
+	TPT, TPC, TPH
+Subtables
+	Dictionary<T,T>
+	List<T>
+	Array
+Complex Types
+Data encryption
+Map CUD Functions to Stored Procedures
+Stored Procedures
+Views
+User defined functions
+Update database from model
+Query Split function
+Query Include function
+Support datetime in aggergate functions
 ```
