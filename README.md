@@ -274,6 +274,43 @@ WHERE
 )
 ```
 
+### Disable tracking and proxy creation
+To make query faster, tracking and proxy creation can be disabled:
+
+```cs
+var result = session.Users.NoTrack().Select(u => new
+{
+    u.Id,
+    Username = u.Username.ToLower(),
+    BlogPosts = u.BlogPosts.NoProxies().Select(p => new
+    {
+        p.Id,
+        p.Title,
+        p.Text,
+        Tags = p.Tags
+    }).ToList()
+});
+```
+NoTrack disable tracking object by change tracker and proxy object will create, to disable proxy creation and tracking, use NoProxies method
+
+### Use second level cache:
+STORM supports second-level cache, to enable cache, use FromCache method:
+
+```cs
+var result = session.Users.FromCache().NoTrack().Select(u => new
+{
+    u.Id,
+    Username = u.Username.ToLower(),
+    BlogPosts = u.BlogPosts.NoProxies().Select(p => new
+    {
+        p.Id,
+        p.Title,
+        p.Text,
+        Tags = p.Tags
+    }).ToList()
+});
+```
+
 ## STORM Features:
 STORM Support many features that you can use:
 ```
