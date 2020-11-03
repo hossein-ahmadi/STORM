@@ -83,7 +83,7 @@ public class BlogDbSession : DbSession
 ```
 
 ## Fluent map
-You can use fluent api to create map for entities:
+STORM supports auto mapping of entities, but uou can use fluent api to customize mapping for entities:
 
 ```cs
 public class BlogDbSession : DbSession
