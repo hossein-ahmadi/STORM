@@ -9,10 +9,6 @@ STORM is fast in Insert, Update, Delete and also running queries. This benchmark
 3. Delete 1000 records
 4. Query 50000 records
 
-<i>Lazy load and proxy object creation features are not enabled for EF Core</i>
-<br/>
-<i>Lazy load enabled for STORM_Query and STORM_Query_NoTrack</i>
-<br/
 <i>Dapper is only compared in query results</i>
 
 ```
