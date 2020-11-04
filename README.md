@@ -22,29 +22,39 @@ Following providers is under development:
 ## Benchmarks
 STORM is fast in all CRUD operations. The following benchmark compared STORM with EF Core and Dapper. Benchmark is based on:
 
-1. Inserting 5000 records
-2. Updating 10000 records
-3. Deleting 1000 records
-4. Query 50000 records
+1. Inserting 5000 users
+1. Inserting 25000 records (1000 users, 5 blog post for each user)
+2. Updating 10000 users
+3. Deleting 1500 blogposts
+4. Query 100000 users
 
 <i>Dapper is only compared in query results</i>
 
 ```
-|                         Method |        Mean |     Error |    StdDev |      Gen 0 |     Gen 1 |     Gen 2 | Allocated |
-|------------------------------- |------------:|----------:|----------:|-----------:|----------:|----------:|----------:|
-|                   STORM_Insert |   760.02 ms | 14.016 ms | 23.028 ms |  8000.0000 | 3000.0000 | 1000.0000 |  29.23 MB |
-|                  EFCore_Insert | 1,820.50 ms | 13.033 ms | 12.191 ms | 14000.0000 | 5000.0000 | 1000.0000 |  78.58 MB |
-|                   STORM_Update |   921.50 ms | 17.335 ms | 39.482 ms | 13000.0000 | 5000.0000 | 2000.0000 |  62.23 MB |
-|                  EFCore_Update | 2,548.29 ms | 18.371 ms | 16.286 ms | 35000.0000 | 9000.0000 | 2000.0000 | 151.82 MB |
-|                    STORM_Query |   283.20 ms |  5.139 ms |  6.118 ms | 12000.0000 | 5000.0000 | 1000.0000 |     79 MB |
-|                   EFCore_Query |   719.04 ms | 13.739 ms | 14.109 ms | 24000.0000 | 9000.0000 | 3000.0000 | 136.46 MB |
-|            STORM_Query_NoTrack |    84.82 ms |  1.628 ms |  2.437 ms |  3000.0000 | 1000.0000 |         - |   20.5 MB |
-|           EFCore_Query_NoTrack |   348.73 ms |  6.353 ms |  5.305 ms | 16000.0000 | 5000.0000 | 1000.0000 |  93.98 MB |
-|  STORM_Query_NoTrack_NoProxies |    83.32 ms |  1.547 ms |  1.781 ms |  3000.0000 | 1000.0000 |         - |  19.35 MB |
-| EFCore_Query_NoTrack_NoProxies |   107.17 ms |  2.104 ms |  3.685 ms |  5000.0000 | 2000.0000 |         - |  30.02 MB |
-|                   Dapper_Query |    90.76 ms |  1.809 ms |  1.604 ms |  3000.0000 | 1000.0000 |         - |  21.98 MB |
-|                   STORM_Delete |    78.57 ms |  2.687 ms |  7.881 ms |          - |         - |         - |   3.39 MB |
-|                  EFCore_Delete |   118.12 ms |  2.320 ms |  4.357 ms |  2000.0000 | 1000.0000 |         - |  12.98 MB |
+BenchmarkDotNet=v0.12.1, OS=Windows 10.0.19041.572 (2004/?/20H1)
+Intel Core i5-6500 CPU 3.20GHz (Skylake), 1 CPU, 4 logical and 4 physical cores
+.NET Core SDK=3.1.402
+  [Host]     : .NET Core 3.1.8 (CoreCLR 4.700.20.41105, CoreFX 4.700.20.41903), X64 RyuJIT
+  DefaultJob : .NET Core 3.1.8 (CoreCLR 4.700.20.41105, CoreFX 4.700.20.41903), X64 RyuJIT
+
+
+|                         Method |       Mean |    Error |   StdDev |     Median |      Gen 0 |      Gen 1 |     Gen 2 | Allocated |
+|------------------------------- |-----------:|---------:|---------:|-----------:|-----------:|-----------:|----------:|----------:|
+|                   STORM_Insert |   828.1 ms | 21.33 ms | 61.89 ms |   811.2 ms |  8000.0000 |  3000.0000 | 1000.0000 |  29.23 MB |
+|                  EFCore_Insert | 1,854.1 ms | 25.60 ms | 23.94 ms | 1,858.2 ms | 14000.0000 |  5000.0000 | 1000.0000 |  78.64 MB |
+|   STORM_Insert_WithNavigations | 1,622.1 ms | 32.02 ms | 34.26 ms | 1,627.2 ms | 58000.0000 | 13000.0000 | 1000.0000 | 185.28 MB |
+|  EFCore_Insert_WithNavigations | 2,998.5 ms | 57.34 ms | 97.37 ms | 2,963.9 ms | 27000.0000 | 10000.0000 | 1000.0000 | 132.98 MB |
+|                   STORM_Update |   970.0 ms | 19.37 ms | 44.90 ms |   962.8 ms | 13000.0000 |  5000.0000 | 2000.0000 |  62.24 MB |
+|                  EFCore_Update | 2,626.8 ms | 50.55 ms | 54.08 ms | 2,610.4 ms | 35000.0000 |  9000.0000 | 2000.0000 | 151.83 MB |
+|                    STORM_Query |   597.4 ms | 11.51 ms | 12.31 ms |   600.3 ms | 25000.0000 | 10000.0000 | 2000.0000 | 158.55 MB |
+|                   EFCore_Query | 1,437.0 ms | 26.18 ms | 23.21 ms | 1,439.0 ms | 47000.0000 | 19000.0000 | 4000.0000 | 273.49 MB |
+|            STORM_Query_NoTrack |   193.5 ms |  2.85 ms |  2.67 ms |   194.2 ms |  7000.0000 |  3000.0000 | 1000.0000 |  40.95 MB |
+|           EFCore_Query_NoTrack |   682.0 ms | 12.95 ms | 18.57 ms |   680.8 ms | 34000.0000 | 13000.0000 | 3000.0000 | 187.93 MB |
+|  STORM_Query_NoTrack_NoProxies |   184.5 ms |  2.56 ms |  2.27 ms |   184.9 ms |  7000.0000 |  3000.0000 | 1000.0000 |  38.66 MB |
+| EFCore_Query_NoTrack_NoProxies |   236.3 ms |  4.70 ms |  7.85 ms |   239.8 ms | 11000.0000 |  4000.0000 | 1000.0000 |  60.02 MB |
+|                   Dapper_Query |   212.9 ms |  2.65 ms |  2.48 ms |   212.6 ms |  7000.0000 |  2000.0000 | 1000.0000 |  43.97 MB |
+|                   STORM_Delete |   119.8 ms |  5.62 ms | 16.49 ms |   120.4 ms |  1000.0000 |          - |         - |   5.54 MB |
+|                  EFCore_Delete |   176.3 ms |  3.41 ms |  6.66 ms |   177.1 ms |  4000.0000 |  1000.0000 |         - |  21.89 MB |
 ```
 
 ## Getting started
