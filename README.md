@@ -14,7 +14,7 @@ STORM (Fast and full-featured object database mapper for .NET). To know more abo
 12. [Delete entities](https://github.com/hossein-ahmadi/STORM/wiki/11-Delete-entities)
 13. [Batch operations](https://github.com/hossein-ahmadi/STORM/wiki/12-Batch-operations)
 14. Query data
- * [13 Query (Filter output)](https://github.com/hossein-ahmadi/STORM/wiki/13-Query--(Filter-output))
+ * [Query (Filter output)](https://github.com/hossein-ahmadi/STORM/wiki/13-Query--(Filter-output))
  * [Output projection](https://github.com/hossein-ahmadi/STORM/wiki/14-Query-(Output-projection))
  * [Joins](https://github.com/hossein-ahmadi/STORM/wiki/15-Query-(Joins))
  * [Advance features](https://github.com/hossein-ahmadi/STORM/wiki/16-Query-(Advance-features))
