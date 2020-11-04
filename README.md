@@ -20,11 +20,11 @@ Following providers is under development:
     3. SQLite
 
 ## Benchmarks
-STORM is fast in Insert, Update, Delete and also running queries. This benchmark is based on:
+STORM is fast in all CRUD operations. The following benchmark compared STORM with EF Core and Dapper. Benchmark is based on:
 
-1. Insert 5000 records
-2. Update 10000 records
-3. Delete 1000 records
+1. Inserting 5000 records
+2. Updating 10000 records
+3. Deleting 1000 records
 4. Query 50000 records
 
 <i>Dapper is only compared in query results</i>
