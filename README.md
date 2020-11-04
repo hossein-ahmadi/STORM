@@ -63,7 +63,7 @@ public class User
 	public DateTime RegisterDate { get; set; }
 
 	// Many to one relation
-	public Many<BlogPost> BlogPosts { get; set; }
+	public virtual Many<BlogPost> BlogPosts { get; set; }
 }
 
 public class Tag
