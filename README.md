@@ -1,6 +1,24 @@
 # STORM
 STORM (Fast and full-featured object database mapper for .NET)
 
+## Install
+STORM is available in on Nuget. You can install it with following command:
+
+```sh
+Install-Package Tosinso.STORM
+```
+
+## Supported providers
+STORM Support following db providers:
+
+    1. SQL Server
+
+Following providers is under development:
+
+    1. Oracle
+    2. MySQL
+    3. SQLite
+
 ## Benchmarks
 STORM is fast in Insert, Update, Delete and also running queries. This benchmark is based on:
 
@@ -28,24 +46,6 @@ STORM is fast in Insert, Update, Delete and also running queries. This benchmark
 |                   STORM_Delete |    78.57 ms |  2.687 ms |  7.881 ms |          - |         - |         - |   3.39 MB |
 |                  EFCore_Delete |   118.12 ms |  2.320 ms |  4.357 ms |  2000.0000 | 1000.0000 |         - |  12.98 MB |
 ```
-
-## Install
-STORM is available in on Nuget. You can install it with following command:
-
-```sh
-Install-Package Tosinso.STORM
-```
-
-## Supported providers
-STORM Support following db providers:
-
-    1. SQL Server
-
-Following providers is under development:
-
-    1. Oracle
-    2. MySQL
-    3. SQLite
 
 ## Getting started
 The following code demonstrates basic usage of STORM. The first step is creating entities:
