@@ -18,12 +18,6 @@ Following providers is under development:
     1. Oracle
     2. MySQL
     3. SQLite
-    
-SQL Server provider is available on NuGet. Install it with following command:
-
-```sh
-Install-Package Tosinso.STORM.Providers.SqLServer
-```
 
 ## Getting started
 The following code demonstrates basic usage of STORM. The first step is creating entities:
