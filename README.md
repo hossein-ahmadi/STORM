@@ -276,13 +276,14 @@ The following queries run for getting result, 1 query for users, 1 query for blo
 ```sql
 -- Main query
 SELECT
-    LOWER([Users].[Id]) [Id],
-    [Users].[Username] [Username],
+    [Users].[Id] [Id],
+    LOWER([Users].[Username]) [Username],
     [Users].[Id] [BlogPosts@key1]
 FROM
     Users [Users]
 
--- BlogPosts query
+----------
+BlogPosts
 (SELECT
     [Users.BlogPosts].[Id] [Id],
     [Users.BlogPosts].[Title] [Title],
@@ -290,7 +291,7 @@ FROM
     [Users.BlogPosts].[Id] [Tags@key1]
 FROM
     [dbo].[BlogPosts] [Users.BlogPosts]
-WHERE
+WHERE 
     [Users.BlogPosts].[UserId] in (@key1_where)
 )
 ```
