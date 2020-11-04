@@ -5,7 +5,7 @@ STORM (Fast and full-featured object database mapper for .NET). To know more abo
 2. [Benchmarks](https://github.com/hossein-ahmadi/STORM/wiki/02-Benchmarks)
 3. [DbSession, DbTable and Entities](https://github.com/hossein-ahmadi/STORM/wiki/03-DbSession,-DbTable-and-Entities)
 4. [Navigations](https://github.com/hossein-ahmadi/STORM/wiki/04-Navigations)
-6. [Auto map conventions](https://github.com/hossein-ahmadi/STORM/wiki/05-Auto-map-conventions)
+6. [Using enum](https://github.com/hossein-ahmadi/STORM/wiki/05-Using-enum)
 7. [Map with attributes](https://github.com/hossein-ahmadi/STORM/wiki/06-Map-with-attributes)
 9. [Map with fluent api](https://github.com/hossein-ahmadi/STORM/wiki/07-Map-with-fluent-api)
 8. [Create database from model](https://github.com/hossein-ahmadi/STORM/wiki/08-Create-database-from-model)
