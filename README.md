@@ -24,13 +24,7 @@ STORM (Fast and full-featured object database mapper for .NET). To know more abo
 16. [Squences, Defaults and Check Constraints](https://github.com/hossein-ahmadi/STORM/wiki/21-Sequences,-Default-and-Check-constraints)
 17. [Shadow properties](https://github.com/hossein-ahmadi/STORM/wiki/22-Shadow-properties)
 18. [Entity validators](https://github.com/hossein-ahmadi/STORM/wiki/24-Entity-validators)
-19. [Session configuration](https://github.com/hossein-ahmadi/STORM/wiki/23-Session-configuration)    
-21. Inheritance (under development)
-22. Spatial types (planned)
-23. Dictionary tables (planned)
-24. Data encryption (planned)
-25. Entity value convertor (planned)
-
+19. [Session configuration](https://github.com/hossein-ahmadi/STORM/wiki/23-Session-configuration)
 ## Install
 STORM is available in on Nuget. You can install it with following command:
 
