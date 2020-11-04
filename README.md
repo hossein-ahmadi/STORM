@@ -104,37 +104,6 @@ public class BlogDbSession : DbSession
 }
 ```
 
-## Fluent map
-STORM supports auto mapping of entities, but you can use fluent api to customize mapping for entities:
-
-```cs
-public class BlogDbSession : DbSession
-{
-    public DbTable<User> Users { get; set; }
-    public DbTable<Tag> Tags { get; set; }
-    public DbTable<BlogPost> BlogPosts { get; set; }
-
-    protected override void OnSetup(DbSessionConfiguration config)
-    {
-        config.UseProvider<STORM.Providers.SqlServer.SqlServerDbProvider>("Data Source=.;Initial Catalog=BlogDb;Integrated Security=true;MultipleActiveResultSets=True");
-        config.Entity<User>()
-            .Property(p => p.Username).HasMaxLength(100).IsUnique();
-        config.Entity<User>()
-            .Many(u => u.BlogPosts)
-            .ToRequiredOne()
-            .HasForeignKey(p => p.UserId);
-
-        config.Entity<BlogPost>()
-            .Many(p => p.Tags)
-            .ToMany(t => t.BlogPosts)
-            .LeftKeys("BlogPostId")
-            .RightKeys("TagId")
-            .ToTable("BlogPostsTags");
-        base.OnSetup(config);
-    }
-}
-```
-
 ## Create database from model
 
 ```cs
@@ -142,7 +111,7 @@ using var session = new BlogDbSession();
 session.Database.CreateIfNotExists();
 ```
 
-## Insert entities
+## Add entities
 
 ```cs
 using var session = new BlogDbSession();
@@ -199,7 +168,7 @@ using var session = new BlogDbSession();
 var users = session.Users.ToList();
 ```
 
-To filter entities:
+filter with linq expressions:
 
 ```cs
 using var session = new BlogDbSession();
