@@ -5,7 +5,8 @@ STORM (Fast and full-featured object database mapper for .NET)
 STORM is fast in Insert, Update, Delete and also running queries. This benchmark is based on:
 
 <i>Lazy load feature is not enabled for EF Core</i>
-<i>Lazy load enabled for STORM_Query and STORM_Query_NoTrakc</i>
+<br/>
+<i>Lazy load enabled for STORM_Query and STORM_Query_NoTrack</i>
 
 1. Insert 5000 records
 2. Update 10000 records
