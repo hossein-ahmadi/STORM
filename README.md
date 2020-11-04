@@ -48,7 +48,9 @@ STORM is fast in Insert, Update, Delete and also running queries. This benchmark
 ```
 
 ## Getting started
-The following code demonstrates basic usage of STORM. The first step is creating entities:
+The following sections demonstrates basic usage of STORM.
+
+### Creating POCO entity classes
 
 ```cs
 public class User
@@ -87,7 +89,7 @@ public class BlogPost
 }
 ```
 
-## Create DbSession
+### Create DbSession
 
 ```cs
 public class BlogDbSession : DbSession
@@ -104,14 +106,14 @@ public class BlogDbSession : DbSession
 }
 ```
 
-## Create database from model
+### Create database from model
 
 ```cs
 using var session = new BlogDbSession();
 session.Database.CreateIfNotExists();
 ```
 
-## Add entities
+### Add entities
 
 ```cs
 using var session = new BlogDbSession();
@@ -136,9 +138,7 @@ session.Users.Add(new User()
 session.SaveChanges();
 ```
 
-## Update entities
-
-STORM use change tracker to detect changed values of entities. Update data is simple as:
+### Update entities
 
 ```cs
 using var session = new BlogDbSession();
@@ -147,9 +147,7 @@ user.Password = "new password";
 session.SaveChanges();
 ```
 
-## Delete entities
-
-The following code demonstrates how to delete entities from database:
+### Delete entities
 
 ```cs
 using var session = new BlogDbSession();
@@ -160,15 +158,15 @@ session.BlogPosts.Delete(blogpost);
 session.SaveChanges();
 ```
 
-## Query data
-STORM Support simple queries to advance queries. to select all entities:
+### Query data
 
+Retreive all records:
 ```cs
 using var session = new BlogDbSession();
 var users = session.Users.ToList();
 ```
 
-filter with linq expressions:
+Or filter with linq expressions:
 
 ```cs
 using var session = new BlogDbSession();
