@@ -15,7 +15,7 @@ STORM (Fast and full-featured object database mapper for .NET). To know more abo
 12. Query data
  * [Query (Filter output)](https://github.com/hossein-ahmadi/STORM/wiki/12-Query--(Filter-output))
  * [Output projection](https://github.com/hossein-ahmadi/STORM/wiki/13-Query-(Output-projection))
- * [Joins](https://github.com/hossein-ahmadi/STORM/wiki/15-Query-(Joins))
+ * [Joins](https://github.com/hossein-ahmadi/STORM/wiki/14-Query-(Joins))
  * [Advance features](https://github.com/hossein-ahmadi/STORM/wiki/16-Query-(Advance-features))
  * [Performance tips](https://github.com/hossein-ahmadi/STORM/wiki/17-Query-(Performance-tips))
 13. [Concurrency check](https://github.com/hossein-ahmadi/STORM/wiki/18-Concurrency-check)
