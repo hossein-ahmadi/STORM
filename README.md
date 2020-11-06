@@ -1,5 +1,5 @@
 # STORM
-STORM (Fast and full-featured object database mapper for .NET 3.1). To know more about STORM, read our documentation:
+STORM (Fast and full-featured object database mapper for .NET Core 3.1). To know more about STORM, read our documentation:
 
 * [Getting Started](https://github.com/hossein-ahmadi/STORM/wiki/Getting-Started)
 * [Benchmarks](https://github.com/hossein-ahmadi/STORM/wiki/Benchmarks)
