@@ -24,6 +24,7 @@ STORM (Fast and full-featured object database mapper for .NET Core 3.1). To know
 * [Squences, Defaults and Check Constraints](https://github.com/hossein-ahmadi/STORM/wiki/Sequences,-Default-and-Check-constraints)
 * [Shadow properties](https://github.com/hossein-ahmadi/STORM/wiki/Shadow-properties)
 * [Entity validators](https://github.com/hossein-ahmadi/STORM/wiki/Entity-validators)
+* [Dependency Injection](https://github.com/hossein-ahmadi/STORM/wiki/Dependency-Injection)
 * [Session configuration](https://github.com/hossein-ahmadi/STORM/wiki/Session-configuration)
 
 ## Install
