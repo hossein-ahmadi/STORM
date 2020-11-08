@@ -18,6 +18,7 @@ STORM (Fast and full-featured object database mapper for .NET Core 3.1). To know
 * [Output projection](https://github.com/hossein-ahmadi/STORM/wiki/Query-(Output-projection))
 * [Joins](https://github.com/hossein-ahmadi/STORM/wiki/Query-(Joins))
 * [Advance query features](https://github.com/hossein-ahmadi/STORM/wiki/Query-(Advance-features))
+* [Loading navigations](https://github.com/hossein-ahmadi/STORM/wiki/Loading-navigations)
 * [Performance tips](https://github.com/hossein-ahmadi/STORM/wiki/Query-(Performance-tips))
 * [Optimistic concurrency](https://github.com/hossein-ahmadi/STORM/wiki/Concurrency-check)
 * [JSON Columns](https://github.com/hossein-ahmadi/STORM/wiki/JSON-Columns)
