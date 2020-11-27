@@ -209,4 +209,8 @@ Or filter with linq expressions:
 ```cs
 using var session = new BlogDbSession();
 var users = session.Users.Where(u=>u.Username == "tosinso").ToList();
+
+var users2 = from p in session.Users
+    where p.Username == "tosinso"
+    select p;
 ```
