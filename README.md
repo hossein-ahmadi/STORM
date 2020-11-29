@@ -48,41 +48,48 @@ Following providers is under development:
     3. SQLite
 
 ## Benchmarks
-STORM is fast in all CRUD operations. The following benchmark compared STORM with EF Core and Dapper. Benchmark is based on:
+STORM is fast in all CRUD operations. The following benchmark compared STORM with EF Core 5.0 and Dapper. Benchmark is based on:
 
 1. Inserting 5000 users
-1. Inserting 25000 records (1000 users, 5 blog post for each user)
+1. Inserting 11000 records (1000 users, 10 blog post for each user)
 2. Updating 10000 users
-3. Deleting 1500 blogposts
+3. Deleting 500 blogposts
 4. Query 100000 users
 
 <i>Dapper is only compared in query results</i>
 
+STORM Batch Size: 250 o/s
 ```
-BenchmarkDotNet=v0.12.1, OS=Windows 10.0.19041.572 (2004/?/20H1)
-Intel Core i5-6500 CPU 3.20GHz (Skylake), 1 CPU, 4 logical and 4 physical cores
-.NET Core SDK=3.1.402
-  [Host]     : .NET Core 3.1.8 (CoreCLR 4.700.20.41105, CoreFX 4.700.20.41903), X64 RyuJIT
-  DefaultJob : .NET Core 3.1.8 (CoreCLR 4.700.20.41105, CoreFX 4.700.20.41903), X64 RyuJIT
+BenchmarkDotNet=v0.12.1, OS=Windows 10.0.19042
+Intel Core i5-3570K CPU 3.40GHz (Ivy Bridge), 1 CPU, 4 logical and 4 physical cores
+.NET Core SDK=5.0.100
+  [Host]     : .NET Core 5.0.0 (CoreCLR 5.0.20.51904, CoreFX 5.0.20.51904), X64 RyuJIT
+  DefaultJob : .NET Core 5.0.0 (CoreCLR 5.0.20.51904, CoreFX 5.0.20.51904), X64 RyuJIT
 
 
-|                         Method |        Mean |     Error |    StdDev |      Gen 0 |      Gen 1 |     Gen 2 | Allocated |
-|------------------------------- |------------:|----------:|----------:|-----------:|-----------:|----------:|----------:|
-|                   STORM_Insert |   754.82 ms | 17.510 ms | 49.958 ms |  8000.0000 |  3000.0000 | 1000.0000 |  29.27 MB |
-|                  EFCore_Insert | 1,787.91 ms | 35.452 ms | 39.404 ms | 14000.0000 |  5000.0000 | 1000.0000 |  78.57 MB |
-|   STORM_Insert_WithNavigations | 1,599.69 ms | 31.776 ms | 77.947 ms | 57000.0000 | 13000.0000 | 1000.0000 | 181.99 MB |
-|  EFCore_Insert_WithNavigations | 2,721.27 ms | 17.618 ms | 14.712 ms | 25000.0000 |  8000.0000 | 1000.0000 | 127.34 MB |
-|                   STORM_Update |   929.25 ms | 19.046 ms | 55.257 ms | 12000.0000 |  4000.0000 | 2000.0000 |  64.87 MB |
-|                  EFCore_Update | 2,494.05 ms | 22.519 ms | 17.582 ms | 34000.0000 | 10000.0000 | 2000.0000 | 152.97 MB |
-|                    STORM_Query |   552.79 ms | 10.589 ms | 12.195 ms | 26000.0000 | 10000.0000 | 3000.0000 | 154.94 MB |
-|                   EFCore_Query | 1,456.24 ms | 26.596 ms | 24.878 ms | 47000.0000 | 19000.0000 | 4000.0000 | 273.65 MB |
-|            STORM_Query_NoTrack |   183.06 ms |  3.618 ms |  6.524 ms |  7000.0000 |  3000.0000 | 1000.0000 |  38.88 MB |
-|           EFCore_Query_NoTrack |   693.58 ms | 13.681 ms | 15.207 ms | 34000.0000 | 13000.0000 | 3000.0000 | 188.08 MB |
-|  STORM_Query_NoTrack_NoProxies |   181.34 ms |  1.858 ms |  1.551 ms |  7000.0000 |  3000.0000 | 1000.0000 |  38.88 MB |
-| EFCore_Query_NoTrack_NoProxies |   224.82 ms |  4.347 ms |  5.498 ms | 11000.0000 |  4000.0000 | 1000.0000 |  60.17 MB |
-|                   Dapper_Query |   204.98 ms |  3.520 ms |  3.293 ms |  7000.0000 |  2000.0000 | 1000.0000 |  44.12 MB |
-|                   STORM_Delete |    99.01 ms |  3.852 ms | 10.990 ms |  1000.0000 |          - |         - |   5.05 MB |
-|                  EFCore_Delete |   160.41 ms |  2.661 ms |  2.489 ms |  4000.0000 |  1000.0000 |         - |  19.99 MB |
+|                         Method |         Mean |      Error |     StdDev |       Median |      Gen 0 |      Gen 1 |     Gen 2 |    Allocated |
+|------------------------------- |-------------:|-----------:|-----------:|-------------:|-----------:|-----------:|----------:|-------------:|
+|                   STORM_Insert |   430.200 ms |  8.0645 ms |  7.5435 ms |   431.320 ms |  6000.0000 |  1000.0000 |         - |  25288.41 KB |
+|                  EFCore_Insert |   521.599 ms |  7.8862 ms |  6.9909 ms |   519.500 ms | 10000.0000 |  3000.0000 |         - |   63779.6 KB |
+|   STORM_Insert_WithNavigations | 1,516.083 ms | 29.6653 ms | 48.7409 ms | 1,511.916 ms | 26000.0000 |  5000.0000 | 2000.0000 | 100116.13 KB |
+|  EFCore_Insert_WithNavigations | 1,566.309 ms | 10.3883 ms |  9.2090 ms | 1,564.177 ms | 38000.0000 | 12000.0000 | 1000.0000 | 198046.23 KB |
+|                   STORM_Update |   476.239 ms |  1.7810 ms |  1.6659 ms |   475.719 ms | 39000.0000 |  5000.0000 | 2000.0000 | 132500.56 KB |
+|                  EFCore_Update |   627.717 ms |  6.3968 ms |  5.9836 ms |   627.095 ms | 20000.0000 |  6000.0000 | 1000.0000 |  107419.8 KB |
+|                    STORM_Query |   489.170 ms |  7.4803 ms |  6.9971 ms |   487.325 ms | 27000.0000 | 11000.0000 | 3000.0000 | 165710.16 KB |
+|                   EFCore_Query | 1,684.000 ms | 16.2304 ms | 15.1819 ms | 1,690.256 ms | 49000.0000 | 19000.0000 | 3000.0000 |  308055.7 KB |
+|                     STORM_Load |     1.118 ms |  0.0091 ms |  0.0085 ms |     1.118 ms |    39.0625 |          - |         - |    119.49 KB |
+|                    EFCore_Load |     1.567 ms |  0.0657 ms |  0.1842 ms |     1.547 ms |          - |          - |         - |     54.13 KB |
+|         STORM_QueryFilter_Load |    16.769 ms |  0.3332 ms |  0.8777 ms |    17.233 ms |   734.3750 |   343.7500 |  140.6250 |   4301.26 KB |
+|        EFCore_QueryFilter_Load |    84.211 ms |  1.5433 ms |  1.5158 ms |    84.059 ms |  3000.0000 |  1000.0000 |         - |  22378.43 KB |
+|            STORM_Query_NoTrack |   159.485 ms |  3.1340 ms |  3.0780 ms |   158.750 ms |  6666.6667 |  2666.6667 |  666.6667 |   39823.1 KB |
+|           EFCore_Query_NoTrack |   769.094 ms |  7.0530 ms |  6.2523 ms |   770.517 ms | 13000.0000 |  4000.0000 | 1000.0000 |  78818.15 KB |
+|            STORM_Query_Complex |   475.644 ms |  6.1008 ms |  5.4082 ms |   476.715 ms | 21000.0000 |  5000.0000 | 1000.0000 | 135362.98 KB |
+|           EFCore_Query_Complex |   765.239 ms |  7.2627 ms |  6.0647 ms |   765.633 ms | 13000.0000 |  5000.0000 | 1000.0000 |  78817.43 KB |
+|  STORM_Query_NoTrack_NoProxies |   154.443 ms |  2.8828 ms |  2.6965 ms |   154.745 ms |  6750.0000 |  2750.0000 | 1000.0000 |  39823.94 KB |
+| EFCore_Query_NoTrack_NoProxies |   195.383 ms |  3.9056 ms |  6.0805 ms |   195.606 ms | 11000.0000 |  4000.0000 | 1000.0000 |  61620.88 KB |
+|                   Dapper_Query |   173.045 ms |  3.4304 ms |  4.0836 ms |   172.505 ms |  7000.0000 |  2000.0000 | 1000.0000 |  45179.28 KB |
+|                   STORM_Delete |    41.716 ms |  2.9138 ms |  8.5913 ms |    41.535 ms |   312.5000 |   125.0000 |         - |   1959.22 KB |
+|                  EFCore_Delete |    48.903 ms |  0.8881 ms |  0.8307 ms |    48.689 ms |          - |          - |         - |   4982.94 KB |
 ```
 
 ## Getting started
